@@ -51,9 +51,10 @@ conda activate PyG
 pip install torch torchvision torchaudio
 pip install torch-geometric
 pip install numpy matplotlib
+```
 
-Data Setup
-Graph Data (for GNN)
+## Data Setup
+### Graph Data (for GNN)
 
 Place your graph files (graph_0.pt, graph_1.pt, etc.) in data/data_inverse/graphs/.
 The file test_GT.pkl should be in data/data_inverse/ for labels.
@@ -69,30 +70,16 @@ If you run into a FileNotFoundError, double-check the relative paths and your wo
 Running the Training Script
 Activate your environment (if using conda/virtualenv):
 
-bash
-Copy code
+```bash
 conda activate PyG
-Navigate to the project root:
+```
 
-bash
-Copy code
-cd /path/to/GNN_CNN_PNM
-Run the Hybrid Training:
+```bash
+python -m gnn.train
+```
+This command invokes Python’s module mode, treating gnn as a package and running the rain.py script.
 
-bash
-Copy code
-python -m gnn_cnn.hybrid_train
-This command invokes Python’s module mode, treating gnn_cnn as a package and running the hybrid_train.py script.
-Make sure you have an __init__.py inside gnn_cnn/, so Python recognizes it as a package.
-During training, the script will:
 
-Load both the GNN dataset (graphs + labels) and the CNN dataset (images + labels).
-Split them into train/test sets using matching indices.
-Create a hybrid model (HybridModel) to process the graph and image data in parallel.
-Print out training and testing losses each epoch.
-Plot loss curves and predictions vs. ground truth at the end of training.
-Notes
-Path Adjustments: If you’ve moved or renamed data_inverse/ or your HDF5 file, be sure to update the paths in the script.
 Hardware: If you have a CUDA-capable GPU, the script will use GPU (cuda) by default when torch.cuda.is_available() is True. Otherwise, it uses CPU.
+
 Hyperparameters: The batch size, learning rate, number of epochs, and hidden layer dimensions can be tuned in hybrid_train.py.
-Modularization: You can split out data loading, modeling, and training into separate files (datasets.py, models.py, train.py) for clarity.
